@@ -1,22 +1,88 @@
+<!DOCTYPE html>
 <html>
 <head>
-	<title>COP 4331 LAMP Stack Demo</title>
-	<script type="text/javascript" src="js/md5.js"></script>
-	<script type="text/javascript" src="js/code.js"></script>
-    <link href="css/styles.css" rel="stylesheet">	
+    <title>COP 4331 LAMP Stack Demo</title>
+    <script type="text/javascript" src="js/md5.js"></script>
+    <script type="text/javascript" src="js/code.js"></script>
+    <link href="css/styles.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
-</head>
+
+	</head>
 <body>
 
-<h1 id="title">COP 4331 LAMP Stack Demo</h1>
+<h1 id="title">Contact Manager</h1>
+<h2 id="sub-title">Find Your People</h2>
 
 <div id="loginDiv">
-	<span id="inner-title">PLEASE LOG IN</span>
-	<input type="text" id="loginName" placeholder="Username" /><br />
-	<input type="password" id="loginPassword" placeholder="Password"/><br />
-	<button type="button" id="loginButton" class="buttons" onclick="doLogin();"> Do It </button>
-	<span id="loginResult"></span>
+    <div id="login" class="active">      
+	    <span id="inner-title">LOGIN</span>
+        
+			<label for="loginName"> 
+                <svg id="svg1" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
+                    <path d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-160v-112q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v112H160Z"/>
+                </svg>
+            </label>
+        <input type="text" id="loginName" placeholder="Username" /><br />
+        
+			<label for="loginPassword">
+                <svg id="svg2" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
+                    <path d="M240-80q-33 0-56.5-23.5T160-160v-400q0-33 23.5-56.5T240-640h40v-80q0-83 58.5-141.5T480-920q83 0 141.5 58.5T680-720v80h40q33 0 56.5 23.5T800-560v400q0 33-23.5 56.5T720-80H240Zm240-200q33 0 56.5-23.5T560-360q0-33-23.5-56.5T480-440q-33 0-56.5 23.5T400-360q0 33 23.5 56.5T480-280ZM360-640h240v-80q0-50-35-85t-85-35q-50 0-85 35t-35 85v80Z"/>
+                </svg>
+            </label>
+        <input type="password" id="loginPassword" placeholder="Password"/><br />
+        
+		<button type="button" id="loginButton" class="buttons" onclick="doLogin();"> Log In </button>
+       
+		<div class ="register-link">
+            <p>Don't have an account? <a href="javascript:void(0);" onclick="showForm('registration');">Register</a></p>
+        </div>
+        <span id="loginResult"></span>
+    </div>
+
+    <div id="registration">
+        <span id="inner-title">REGISTER</span>
+
+        <label for="firstName"> 
+            <!-- I need to input a pic here (maybe)-->
+        </label>
+        <input type="text" id="firstName" placeholder="First Name" /><br />
+
+        <label for="lastName"> 
+            <!-- I need to input a pic here (maybe)-->
+        </label>
+        <input type="text" id="lastName" placeholder="Last Name" /><br />
+
+        <label for="regLoginName"> 
+            <svg id="svg5" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
+                <path d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-160v-112q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v112H160Z"/>
+            </svg>
+					</label>
+        <input type="text" id="regLoginName" placeholder="Username" /><br />  
+
+        <label for="regPassword">
+            <svg id="svg6" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
+                <path d="M240-80q-33 0-56.5-23.5T160-160v-400q0-33 23.5-56.5T240-640h40v-80q0-83 58.5-141.5T480-920q83 0 141.5 58.5T680-720v80h40q33 0 56.5 23.5T800-560v400q0 33-23.5 56.5T720-80H240Zm240-200q33 0 56.5-23.5T560-360q0-33-23.5-56.5T480-440q-33 0-56.5 23.5T400-360q0 33 23.5 56.5T480-280ZM360-640h240v-80q0-50-35-85t-85-35q-50 0-85 35t-35 85v80Z"/>
+            </svg>
+        </label>
+        <input type="password" id="regPassword" placeholder="Password"/><br />
+
+        <button type="button" id="registerButton" class="buttons" onclick="doRegister();"> Sign Up </button>
+
+        <div class ="register-link">
+            <p>Already have an account? <a href="javascript:void(0);" onclick="showForm('login');">Login</a></p>
+        </div>
+
+        <span id="registerResult"></span>
+    </div>
 </div>
 
 </body>
 </html>
+
+<script>
+	function showForm(formId) {
+			document.getElementById('login').classList.remove('active');
+			document.getElementById('registration').classList.remove('active');
+			document.getElementById(formId).classList.add('active');
+	}
+</script>
