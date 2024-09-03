@@ -1,0 +1,118 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  background-color: rgba(87, 87, 87, 0.631);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+}
+
+#title {
+  position: fixed;
+  font-size: 30px;
+  left: 20%;
+  color: #FFFFFF;
+  text-align: center;
+  top: 5%;
+}
+
+
+main.table {
+  position: relative;
+  width: 70vw;
+  height: 70vh; 
+  /* background: url('../images/img2.jpg') center / cover;*/ 
+  background-color:  rgba(255, 255, 255, 0.229);
+  box-shadow: 0 6px 12px #0005;
+  border-radius: 12px;
+  overflow: hidden;
+  right: 1%;
+  top: 5vh;
+  color: white;
+}
+
+.table_body {
+  width: 95%;
+  max-height: calc(89% - 12px);
+  background-color: #fffb;
+  margin: 12px auto;
+  border-radius: .6rem;
+  overflow: auto;
+}
+.table_body {
+  width: 95%;
+  max-height: calc(89% - 12px);
+  background-color: #fffb;
+
+  margin: .8rem auto;
+  border-radius: .6rem;
+
+  overflow: auto;
+}
+
+.table_body::-webkit-scrollbar {
+  width: 0.5rem;
+  height: 0.5rem;
+}
+
+.table_body::-webkit-scrollbar-thumb {
+  border-radius: .5rem;
+  background-color: #0004;
+  visibility: hidden;
+}
+
+.table_body:hover::-webkit-scrollbar-thumb {
+  visibility: visible;
+}
+
+table {
+  width: 100%;
+}
+
+table, th, td {
+  border-collapse: collapse;
+  padding: 1rem;
+}
+
+thead th {
+  position: sticky;
+  top: 0;
+  left: 0;
+  background-color: #d5d1defe;
+}
+
+.sidebar {
+  /* background: url('../images/img2.jpg') center / cover;*/ 
+  width: 200px;
+  background-color: #AA00FF;
+  color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 0;
+}
+
+.search input  {
+  position: relative;
+  border-radius: 25px;
+  text-align: center;
+  padding: 10px;
+  font-size: 16px;
+  color: black;
+  border: 2px solid rgba(161, 32, 32, 0.2);
+  border-radius: 40px;
+  margin-bottom: 20px; 
+  left: 90%;
+  top: -320px;
+}
