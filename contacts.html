@@ -4,10 +4,72 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contacts Page</title>
-  <link href="css/contacts.css" rel="stylesheet">
+  <link href="css/contacts2.css" rel="stylesheet">
+  <!-- Bootstrap CSS CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 <body>
 
+  <!-- Sidebar -->
+  <div class="sidebar">
+      <label for="loginName" style="padding-top: 20px;"> 
+        <svg id = "svg1" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" style="fill: rgb(202, 202, 202);">
+          <path d="M12 2A10.13 10.13 0 0 0 2 12a10 10 0 0 0 4 7.92V20h.1a9.7 9.7 0 0 0 11.8 0h.1v-.08A10 10 0 0 0 22 12 10.13 10.13 0 0 0 12 2zM8.07 18.93A3 3 0 0 1 11 16.57h2a3 3 0 0 1 2.93 2.36 7.75 7.75 0 0 1-7.86 0zm9.54-1.29A5 5 0 0 0 13 14.57h-2a5 5 0 0 0-4.61 3.07A8 8 0 0 1 4 12a8.1 8.1 0 0 1 8-8 8.1 8.1 0 0 1 8 8 8 8 0 0 1-2.39 5.64z"></path>
+          <path d="M12 6a3.91 3.91 0 0 0-4 4 3.91 3.91 0 0 0 4 4 3.91 3.91 0 0 0 4-4 3.91 3.91 0 0 0-4-4zm0 6a1.91 1.91 0 0 1-2-2 1.91 1.91 0 0 1 2-2 1.91 1.91 0 0 1 2 2 1.91 1.91 0 0 1-2 2z"></path>
+        </svg>
+      </label>
+      <h4 class="sidebar-text">Hello, [firstname]</h4>
+      <ul class="nav flex-column">
+          <li class="nav-item">
+            <button type="button" id="logoutButton" onclick="doLogout();">Logout</button>
+          </li>
+          <li class="nav-item">
+            <button type="button" id="contactsButton" href="./contacts.html">Contacts</button>
+          </li>
+          <li class="nav-item">
+              <button type="button" id="aboutUsButton" href="#">About Us</button>
+          </li>
+      </ul>
+  </div>
+
+  <div class="content">
+    <!-- Header, search, and Add Button -->
+    <div class="container">
+      <h1>Manage Contacts</h1>
+      <div class="d-flex">
+        <div class="search">
+          <input type="text" id="searchTxt" placeholder="Search" />
+          <button type="button" id="searchBtn" onclick="doSearch();">Search</button>
+        </div>
+  
+        <div class="addContact">
+          <button type="button" id="addContactButton" class="buttons" onclick="addContact();"> + Add Contact </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="container pt-3">
+      <!-- Contacts Table -->
+      <table class="table table-hover table-style">
+        <thead>
+          <tr>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Manage Users</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!--POPULATE CONTACTS HERE-->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+
+  <!--
   <h1 id="title">Manage Contacts</h1>
 
   <div class="search">
@@ -26,13 +88,13 @@
             <th>Last Name</th>
             <th>Email</th>
             <th>Phone</th>
-            <th>Delete</th>
+            <th>Manage Users</th>
           </tr>
         </thead>
 
       </table>
     </section>
-    
+
 
 
   </main>
@@ -46,6 +108,7 @@
     </label>
     <button type="button" id="logoutButton" onclick="doLogout();">Logout</button>
   </div>
-  
+-->
+
 </body>
 </html>
