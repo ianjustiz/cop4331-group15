@@ -58,6 +58,64 @@ function doLogin()
 
 }
 
+function doRegister()
+{
+	console.log("doRegister :)");
+
+	userId = 0;
+	firstName = document.getElementById("firstName").value;
+	lastName = document.getElementById("lastName").value;
+	
+	let login = document.getElementById("regLoginName").value;
+	let password = document.getElementById("regPassword").value;
+
+	document.getElementById("registerResult").innerHTML = "";
+
+	let tmp = {
+		firstName : firstName,
+		lastName : lastName,
+		login : login,
+		password : password
+	};
+
+	let jsonPayload = JSON.stringify( tmp );
+
+	let url = urlBase + '/Register.' + extension;
+	
+	let xhr = new XMLHttpRequest();
+	xhr.open("POST", url, true);
+	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+	try
+	{
+		xhr.onreadystatechange = function() 
+		{
+			if (this.readyState == 4 && this.status == 200) 
+			{
+				let jsonObject = JSON.parse( xhr.responseText );
+
+				if( jsonObject.error == "Username already exists" )
+				{
+					document.getElementById("registerResult").innerHTML = "Username already taken";
+					return;
+				}
+				
+				userId = jsonObject.id;
+
+				saveCookie();
+
+				document.getElementById("registerResult").innerHTML = "User has been registered";
+				
+				window.location.href = "contacts.html";
+			}
+		};
+		xhr.send(jsonPayload);
+	}
+	catch(err)
+	{
+		document.getElementById("registerResult").innerHTML = err.message;
+	}
+}
+
 function saveCookie()
 {
 	let minutes = 20;
