@@ -50,10 +50,14 @@
   
         <div class="addContact">
           <button type="button" id="addContactButton" class="buttons" href="javascript:void(0);" onclick="showForm();"> + Add Contact </button>
-          <span id="contactAddResult"></span>      
         </div>
 
-        <div id="addContBox">      
+        <div id="addContBox"> 
+          
+          <div class="close-btn">
+            <svg cursor="pointer" class="x-icon" onclick="showForm()" width="25" height="25" viewbox="0 0 40 40"><path d="M 10,10 L 30,30 M 30,10 L 10,30" stroke="black" stroke-width="4" /></svg>
+          </div>
+          
           <div class="form-floating mb-3 mt-3">
             <input type="text" class="form-control" id="FName" placeholder="FN">
             <label for="FN">First Name</label>
@@ -74,7 +78,10 @@
             <label for="phN">Phone Number</label>
           </div>
 
-          <button type="button" id="addContButton" class="buttons" onclick="addContact();"> +Add Contact </button>   
+          <button type="button" id="addContButton" class="buttons" onclick="addContact();"> +Add Contact </button> 
+          <div class="pt-2">
+            <span id="contactAddResult"></span> 
+          </div>
         </div>
 
       </div>

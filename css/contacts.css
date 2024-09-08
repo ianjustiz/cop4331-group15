@@ -27,10 +27,11 @@
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4);
   color: black;
   width: 420px;
-  height: 430px;
+  height: 445px;
   text-align: center;
   border-radius: 10px;
   padding: 30px 40px;
+  padding-top: 30px;
   display: none;
   z-index: 100;
 }
@@ -168,4 +169,17 @@
 
 #logoutButton:focus, #contactsButton:focus, #aboutUsButton:focus {
   outline: none;
+}
+
+.bg-close {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40px' height='40px' viewbox='0 0 40 40'%3E%3Cpath d='M 10,10 L 30,30 M 30,10 L 10,30' stroke='black' stroke-width='4' stroke-linecap='butt' /%3E%3C/svg%3E");
+  background-size: 100%;
+}
+
+.x-icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-right: 12px;
+  margin-top: 12px;
 }
