@@ -166,13 +166,14 @@ function addContact()
 	let newContactNumber = document.getElementById("phN").value;
 
 	if(newContactFirst === "" || newContactLast === "" || newContactEmail === "" || newContactNumber === ""){
+		console.log(typeof(userId) + userId)
 		document.getElementById("contactAddResult").innerHTML = "Please populate all fields before submitting";
 		return 0;
 	}
 	document.getElementById("contactAddResult").innerHTML = "";
 
 	let tmp = {
-		userId: userId,
+		userId: userId.toString(),
 		email: newContactEmail,
 		phone: newContactNumber,
 		firstName: newContactFirst,
