@@ -164,16 +164,16 @@ function addContact()
 	let newContactLast = document.getElementById("LName").value;
 	let newContactEmail = document.getElementById("email").value;
 	let newContactNumber = document.getElementById("phN").value;
+	readCookie();
 
 	if(newContactFirst === "" || newContactLast === "" || newContactEmail === "" || newContactNumber === ""){
-		console.log(typeof(userId) + userId)
 		document.getElementById("contactAddResult").innerHTML = "Please populate all fields before submitting";
 		return 0;
 	}
 	document.getElementById("contactAddResult").innerHTML = "";
 
 	let tmp = {
-		userId: userId.toString(),
+		userId: userId,
 		email: newContactEmail,
 		phone: newContactNumber,
 		firstName: newContactFirst,
