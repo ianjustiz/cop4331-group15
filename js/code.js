@@ -14,6 +14,11 @@ function doLogin() {
     let password = document.getElementById("loginPassword").value;
     //var hash = md5(password);
 
+    if (validateInput(login) || validateInput(password)) {
+        document.getElementById("loginResult").innerHTML = "Please insert a username and password";
+        return;
+    }
+
     document.getElementById("loginResult").innerHTML = "";
 
     let tmp = { login: login, password: password };
@@ -35,7 +40,7 @@ function doLogin() {
                     document.getElementById("loginResult").innerHTML = "User/Password combination incorrect";
                     return;
                 }
-
+                
                 firstName = jsonObject.firstName;
                 lastName = jsonObject.lastName;
 
@@ -59,6 +64,11 @@ function doRegister() {
 
     let login = document.getElementById("regLoginName").value;
     let password = document.getElementById("regPassword").value;
+
+    if (validateInput(firstName) || validateInput(lastName) || validateInput(login) || validateInput(password)) {
+        document.getElementById("registerResult").innerHTML = "Please fill all fields before registering";
+        return;
+    }
 
     document.getElementById("registerResult").innerHTML = "";
 
@@ -242,6 +252,11 @@ function addContact() {
         document.getElementById("contactAddResult").innerHTML = err.message;
     }
 
+}
+
+function validateInput(s) {
+    // add further validation here for now just check if empty
+    return s === "";
 }
 
 function searchColor() {
