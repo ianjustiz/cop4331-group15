@@ -12,17 +12,11 @@ function doLogin() {
 
     let login = document.getElementById("loginName").value;
     let password = document.getElementById("loginPassword").value;
-    var hash = md5(password);
-
-    if (!validLoginForm(login, password)) 
-    {
-        document.getElementById("loginResult").innerHTML = "invalid username or password";
-        return;
-    }
+    //var hash = md5(password);
 
     document.getElementById("loginResult").innerHTML = "";
 
-    let tmp = { login: login, password: hash };
+    let tmp = { login: login, password: password };
     // var tmp = {login: login, password: hash};
     let jsonPayload = JSON.stringify(tmp);
 
