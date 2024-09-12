@@ -30,17 +30,17 @@
             </svg>
         </label>
 
-        <h4 class="sidebar-text">Hello, [firstname]</h4>
+        <h4 class="sidebar-text">Hello, <span id="userName1"></span></h4>
 
         <ul class="nav flex-column">
             <li class="nav-item">
                 <button type="button" id="logoutButton" onclick="doLogout();">Logout</button>
             </li>
             <li class="nav-item">
-                <button type="button" id="contactsButton" href="./contacts.html">Contacts</button>
+                <button type="button" id="contactsButton" href="./contacts.html" onclick="readCookie()">Contacts</button>
             </li>
             <li class="nav-item">
-                <button type="button" id="aboutUsButton" href="#">About Us</button>
+                <button type="button" id="aboutUsButton" href="./aboutus.html" onclick="readCookie()">About Us</button>
             </li>
         </ul>
     </div>
