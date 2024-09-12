@@ -201,7 +201,7 @@ function readCookie() {
         window.location.href = "index.html";
     }
     else {
-        document.getElementById("userName1").innerHTML = firstName;
+        document.getElementById("userName").innerHTML = firstName;
     }
 }
 
@@ -303,7 +303,6 @@ function toContacts() {
 }
 
 function toAboutUs() {
-    window.location.href = 'aboutus.html';
-    readCookie();
-    document.getElementById("userName1").innerHTML = firstName;
+    console.log(firstName)
+    window.location.href = 'aboutus.html?user=' + encodeURIComponent(firstName);
 }
