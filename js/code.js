@@ -202,7 +202,6 @@ function readCookie() {
     }
     else {
         document.getElementById("userName1").innerHTML = firstName;
-        document.getElementById("userName2").innerHTML = firstName;
     }
 }
 
@@ -296,4 +295,15 @@ function searchColor() {
         document.getElementById("colorSearchResult").innerHTML = err.message;
     }
 
+}
+
+function toContacts() {
+    window.location.href = 'contacts.html';
+    readCookie();
+}
+
+function toAboutUs() {
+    window.location.href = 'aboutus.html';
+    readCookie();
+    document.getElementById("userName1").innerHTML = firstName;
 }
