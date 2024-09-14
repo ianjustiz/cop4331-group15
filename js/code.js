@@ -115,51 +115,55 @@ function doRegister() {
 function doSearch() {
     let srch = document.getElementById("searchText").value;
 
-    let contactList = [];
+    // Call showAllContacts with the search term
+    showAllContacts(srch);
+}
 
-    let tmp = { search: srch, userId: userId };
+
+function showAllContacts(searchTerm = "") {
+    let tmp = {
+        search: searchTerm,
+        userId: userId
+    };
+
     let jsonPayload = JSON.stringify(tmp);
-
     let url = urlBase + '/SearchContacts.' + extension;
 
     let xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
     try {
         xhr.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 let jsonObject = JSON.parse(xhr.responseText);
+                let contactList = jsonObject.results;
 
-                for (let i = 0; i < jsonObject.results.length; i++) {
-                    contactList.push(jsonObject.results[i]);
-                }
+                let tableBody = document.getElementById("searchResultTableBody");
+                tableBody.innerHTML = ""; // Clear any existing rows
 
-                let table = document.createElement("tbody");
-                table.setAttribute("id", "searchResultTableBody");
-
+                // Loop through the contact list and generate table rows
                 for (let i = 0; i < contactList.length; i++) {
-                    let row = table.insertRow(i);
-                    let cell1 = row.insertCell(0);
-                    let cell2 = row.insertCell(1);
-                    let cell3 = row.insertCell(2);
-                    let cell4 = row.insertCell(3);
-                    let cell5 = row.insertCell(4);
+                    let contact = contactList[i];
+                    let row = tableBody.insertRow();
+                    row.id = `row-${contact.ID}`;
 
-                    cell1.innerHTML = contactList[i]["FirstName"];
-                    cell2.innerHTML = contactList[i]["LastName"];
-                    cell3.innerHTML = contactList[i]["Email"];
-                    cell4.innerHTML = contactList[i]["Phone"];
-                    cell5.innerHTML = `
-    			<button onclick="deleteContact('${contactList[i].FirstName}', '${contactList[i].LastName}', '${contactList[i].Email}', '${contactList[i].Phone}')">Delete</button>
-    			<button onclick="editContact(${contactList[i].ID})">Edit</button>`;
+                    // Fill in the contact details
+                    row.innerHTML = `
+                        <td><span id="firstName-${contact.ID}">${contact.FirstName}</span></td>
+                        <td><span id="lastName-${contact.ID}">${contact.LastName}</span></td>
+                        <td><span id="email-${contact.ID}">${contact.Email}</span></td>
+                        <td><span id="phone-${contact.ID}">${contact.Phone}</span></td>
+                        <td>
+                            <button onclick="deleteContact('${contact.FirstName}','${contact.LastName}', '${contact.Email}', '${contact.Phone}')">Delete</button>
+                            <button onclick="editContact(${contact.ID})">Edit</button>
+                        </td>
+                    `;
                 }
-
-                document.getElementById("searchResultTableBody").replaceWith(table);
             }
         };
         xhr.send(jsonPayload);
-    }
-    catch (err) {
+    } catch (err) {
         document.getElementById("searchResult").innerHTML = err.message;
     }
 }
@@ -260,51 +264,6 @@ function toContacts() {
 function toAboutUs() {
     console.log(firstName)
     window.location.href = 'aboutus.html?user=' + encodeURIComponent(firstName);
-}
-
-function showAllContacts() {
-    let tmp = {
-        search: "",
-        userId: userId
-    };
-
-    let jsonPayload = JSON.stringify(tmp);
-    let url = urlBase + '/SearchContacts.' + extension;
-
-    let xhr = new XMLHttpRequest();
-    xhr.open("POST", url, true);
-    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-
-    try {
-        xhr.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                let jsonObject = JSON.parse(xhr.responseText);
-                let contactList = jsonObject.results;
-
-                let tableBody = document.getElementById("searchResultTableBody");
-                tableBody.innerHTML = ""; 
-                for (let i = 0; i < contactList.length; i++) {
-                    let contact = contactList[i];
-                    let row = tableBody.insertRow();
-                    row.id = `row-${contact.ID}`;
-
-                    row.innerHTML = `
-                        <td><span id="firstName-${contact.ID}">${contact.FirstName}</span></td>
-                        <td><span id="lastName-${contact.ID}">${contact.LastName}</span></td>
-                        <td><span id="email-${contact.ID}">${contact.Email}</span></td>
-                        <td><span id="phone-${contact.ID}">${contact.Phone}</span></td>
-                        <td>
-                            <button onclick="deleteContact('${contact.FirstName}','${contact.LastName}', '${contact.Email}', '${contact.Phone}')">Delete</button>
-                            <button onclick="editContact(${contact.ID})">Edit</button>
-                        </td>
-                    `;
-                }
-            }
-        };
-        xhr.send(jsonPayload);
-    } catch (err) {
-        document.getElementById("searchResult").innerHTML = err.message;
-    }
 }
 
 function updateContact(contact) {
