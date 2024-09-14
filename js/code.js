@@ -330,44 +330,6 @@ function toAboutUs() {
     window.location.href = 'aboutus.html?user=' + encodeURIComponent(firstName);
 }
 
-// function deleteContact(firstName, lastName, email, phone) {
-//     console.log("deleteContact");                                                               
-//     if (!confirm("Are you sure you want to delete this contact?")) {
-//         return;
-//     }
-
-//     let tmp = {
-//         firstName: firstName,
-//         lastName: lastName,
-//         email: email,
-//         phone: phone,
-//         userId: userId
-//     };
-//     let jsonPayload = JSON.stringify(tmp);
-
-//     let url = urlBase + '/GetContactID.' + extension;
-
-//     let xhr = new XMLHttpRequest();
-//     xhr.open("POST", url, true);
-//     xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-    
-//     xhr.onreadystatechange = function() {
-//         if (this.readyState == 4 && this.status == 200) {
-//             let jsonObject = JSON.parse(xhr.responseText);
-            
-//             if (jsonObject.error) {
-//                 console.error("Error getting contact ID:", jsonObject.error);
-//                 return;
-//             }
-
-//             let contactId = jsonObject.id;
-            
-//             deleteContactById(contactId);
-//         }
-//     };
-//     xhr.send(jsonPayload);
-// }
-
 function deleteContactById(contactId) {
     if (!confirm("Are you sure you want to delete this contact?")) {
         return;
