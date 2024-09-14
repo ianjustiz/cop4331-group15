@@ -264,7 +264,7 @@ function toAboutUs() {
 
 function showAllContacts() {
     let tmp = {
-        search: "",  // Empty search to fetch all contacts
+        search: "",
         userId: userId
     };
 
@@ -282,22 +282,19 @@ function showAllContacts() {
                 let contactList = jsonObject.results;
 
                 let tableBody = document.getElementById("searchResultTableBody");
-                tableBody.innerHTML = ""; // Clear any existing rows
-
-                // Loop through the contact list and generate table rows
+                tableBody.innerHTML = ""; 
                 for (let i = 0; i < contactList.length; i++) {
                     let contact = contactList[i];
                     let row = tableBody.insertRow();
                     row.id = `row-${contact.ID}`;
 
-                    // Fill in the contact details
                     row.innerHTML = `
                         <td><span id="firstName-${contact.ID}">${contact.FirstName}</span></td>
                         <td><span id="lastName-${contact.ID}">${contact.LastName}</span></td>
                         <td><span id="email-${contact.ID}">${contact.Email}</span></td>
                         <td><span id="phone-${contact.ID}">${contact.Phone}</span></td>
                         <td>
-                            <button onclick="deleteContact(${contact.ID})">Delete</button>
+                            <button onclick="deleteContact('${contact.FirstName}','${contact.LastName}', '${contact.Email}', '${contact.Phone}')">Delete</button>
                             <button onclick="editContact(${contact.ID})">Edit</button>
                         </td>
                     `;
