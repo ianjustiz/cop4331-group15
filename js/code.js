@@ -149,9 +149,9 @@ function doSearch() {
                     cell2.innerHTML = contactList[i]["LastName"];
                     cell3.innerHTML = contactList[i]["Email"];
                     cell4.innerHTML = contactList[i]["Phone"];
-                    cell5.innerHTML =
-                        '<button type="button" class="buttons" onclick="deleteContact(' + contactList[i] + ')">Delete</button>' +
-                        '<button type="button" class="buttons" onclick="updateContact(' + contactList[i] + ')">Edit</button>';
+                    cell5.innerHTML = `
+    			<button onclick="deleteContact('${contactList[i].FirstName}', '${contactList[i].LastName}', '${contactList[i].Email}', '${contactList[i].Phone}')">Delete</button>
+    			<button onclick="editContact(${contactList[i].ID})">Edit</button>`;
                 }
 
                 document.getElementById("searchResultTableBody").replaceWith(table);
@@ -162,14 +162,6 @@ function doSearch() {
     catch (err) {
         document.getElementById("searchResult").innerHTML = err.message;
     }
-}
-
-function deleteContact(contact) {
-    console.log("deleteContact");
-}
-
-function updateContact(contact) {
-    console.log("updateContact");
 }
 
 function saveCookie() {
@@ -259,43 +251,6 @@ function validateInput(s) {
     return s === "";
 }
 
-function searchColor() {
-    let srch = document.getElementById("searchText").value;
-    document.getElementById("colorSearchResult").innerHTML = "";
-
-    let colorList = "";
-
-    let tmp = { search: srch, userId: userId };
-    let jsonPayload = JSON.stringify(tmp);
-
-    let url = urlBase + '/SearchColors.' + extension;
-
-    let xhr = new XMLHttpRequest();
-    xhr.open("POST", url, true);
-    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-    try {
-        xhr.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("colorSearchResult").innerHTML = "Color(s) has been retrieved";
-                let jsonObject = JSON.parse(xhr.responseText);
-
-                for (let i = 0; i < jsonObject.results.length; i++) {
-                    colorList += jsonObject.results[i];
-                    if (i < jsonObject.results.length - 1) {
-                        colorList += "<br />\r\n";
-                    }
-                }
-
-                document.getElementsByTagName("p")[0].innerHTML = colorList;
-            }
-        };
-        xhr.send(jsonPayload);
-    }
-    catch (err) {
-        document.getElementById("colorSearchResult").innerHTML = err.message;
-    }
-
-}
 
 function toContacts() {
     window.location.href = 'contacts.html';
@@ -355,3 +310,71 @@ function showAllContacts() {
     }
 }
 
+function updateContact(contact) {
+    console.log("updateContact");
+}
+
+function deleteContact(firstName, lastName, email, phone) {
+    console.log("deleteContact");                                                               
+    if (!confirm("Are you sure you want to delete this contact?")) {
+        return;
+    }
+
+    let tmp = {
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        phone: phone,
+        userId: userId
+    };
+    let jsonPayload = JSON.stringify(tmp);
+
+    let url = urlBase + '/GetContactID.' + extension;
+
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+    
+    xhr.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            let jsonObject = JSON.parse(xhr.responseText);
+            
+            if (jsonObject.error) {
+                console.error("Error getting contact ID:", jsonObject.error);
+                return;
+            }
+
+            let contactId = jsonObject.id;
+            
+            deleteContactById(contactId);
+        }
+    };
+    xhr.send(jsonPayload);
+}
+
+function deleteContactById(contactId) {
+    let tmp = {
+        id: contactId
+    };
+    let jsonPayload = JSON.stringify(tmp);
+
+    let url = urlBase + '/DeleteContact.' + extension;
+
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+    
+    xhr.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            let jsonObject = JSON.parse(xhr.responseText);
+            
+            if (jsonObject.error) {
+                console.error("Error deleting contact:", jsonObject.error);
+            } else {
+                console.log("Contact deleted successfully");
+                doSearch(); 
+            }
+        }
+    };
+    xhr.send(jsonPayload);
+}
