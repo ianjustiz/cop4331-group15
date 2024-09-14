@@ -116,7 +116,7 @@
                     </tr>
                 </thead>
                 <tbody id="searchResultTableBody">
-                    <!--POPULATE CONTACTS HERE-->
+                    <!--Contacts population handled by script-->
                 </tbody>
             </table>
         </div>
@@ -142,6 +142,13 @@
         else {
             addContactBox.style.display = 'none';
             contactTable.classList.remove('hidden');
+
+            let inputs = addContactBox.getElementsByTagName('input')
+            for (let i = 0; i < inputs.length; i++) {
+                inputs[i].value = '';
+            }
+
+            showAllContacts();
         }
     }
 </script>

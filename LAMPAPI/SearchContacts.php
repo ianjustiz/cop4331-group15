@@ -12,7 +12,26 @@
 	} 
 	else
 	{
-		$stmt = $conn->prepare("select FirstName, LastName, Phone, Email from Contacts where concat(firstName,' ',LastName) like ? and UserID=?");
+		// substring(Email, 1, locate('@', Email)-1) -> the email up to not including the @
+		$stmt = $conn->prepare(
+		"select 
+					ID, 
+						FirstName, 
+						LastName, 
+						Phone, 
+						Email 
+					from Contacts 
+					where 
+						concat(
+							FirstName,' ',
+							LastName, ' ', 
+							substring(Email, 1, locate('@', Email)-1), ' ', 
+							Phone
+						) 
+						like ? 
+					and 
+						UserID = ?"
+		);
 		$contactName = "%" . $inData["search"] . "%";
 		$stmt->bind_param("ss", $contactName, $inData["userId"]);
 		$stmt->execute();
@@ -26,7 +45,7 @@
 				$searchResults .= ",";
 			}
 			$searchCount++;
-			$searchResults .= '{"FirstName" : "' . $row["FirstName"]. '", "LastName" : "' . $row["LastName"]. '", "Phone" : "' . $row["Phone"]. '", "Email" : "' . $row["Email"]. '"}';
+			$searchResults .= '{"ID" : ' . $row["ID"] . ', "FirstName" : "' . $row["FirstName"]. '", "LastName" : "' . $row["LastName"]. '", "Phone" : "' . $row["Phone"]. '", "Email" : "' . $row["Email"]. '"}';
 		}
 		
 		if( $searchCount == 0 )
