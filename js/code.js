@@ -113,7 +113,7 @@ function doRegister() {
 }
 
 function doSearch() {
-    let srch = document.getElementById("searchText").value;
+    let srch = document.getElementById("searchText").value.trim();
 
     // Call showAllContacts with the search term
     showAllContacts(srch);
@@ -155,8 +155,8 @@ function showAllContacts(searchTerm = "") {
                         <td><span id="email-${contact.ID}">${contact.Email}</span></td>
                         <td><span id="phone-${contact.ID}">${contact.Phone}</span></td>
                         <td>
-                            <button onclick="deleteContact('${contact.FirstName}','${contact.LastName}', '${contact.Email}', '${contact.Phone}')">Delete</button>
-                            <button onclick="editContact(${contact.ID})">Edit</button>
+                            <button id="delete-${contact.ID}" onclick="deleteContactById(${contact.ID})">Delete</button>
+                            <button id="edit-${contact.ID}" onclick="setupUpdate(${contact.ID})">Edit</button>
                         </td>
                     `;
                 }
@@ -167,6 +167,71 @@ function showAllContacts(searchTerm = "") {
         document.getElementById("searchResult").innerHTML = err.message;
     }
 }
+
+function setupUpdate(connId) {
+    console.log("updateContact", `firstName-${connId}`);
+    
+    let firstName = document.getElementById(`firstName-${connId}`).innerText;
+    let lastName = document.getElementById(`lastName-${connId}`).innerText;
+    let email = document.getElementById(`email-${connId}`).innerText;
+    let phone = document.getElementById(`phone-${connId}`).innerText;
+
+    document.getElementById(`row-${connId}`).innerHTML = `
+        <td><input type="text" id="editFirstName-${connId}" value="${firstName}"></td>
+        <td><input type="text" id="editLastName-${connId}" value="${lastName}"></td>
+        <td><input type="text" id="editEmail-${connId}" value="${email}"></td>
+        <td><input type="text" id="editPhone-${connId}" value="${phone}"></td>
+        <td>
+            <button onclick="doSearch()">Cancel</button>
+            <button onclick="saveUpdate(${connId})">Save</button>
+        </td>
+    `;
+}
+
+function saveUpdate(connId) {
+    console.log("saveUpdate");
+
+    let firstName = document.getElementById(`editFirstName-${connId}`).value;
+    let lastName = document.getElementById(`editLastName-${connId}`).value;
+    let email = document.getElementById(`editEmail-${connId}`).value;
+    let phone = document.getElementById(`editPhone-${connId}`).value;
+
+    let tmp = {
+        id: connId,
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        phone: phone
+    };
+
+    let jsonPayload = JSON.stringify(tmp);
+
+    let url = urlBase + '/UpdateContact.' + extension;
+
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
+    try {
+        xhr.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                let jsonObject = JSON.parse(xhr.responseText);
+
+                if (jsonObject.error) {
+                    console.error("Error updating contact:", jsonObject.error);
+                } else {
+                    console.log("Contact updated successfully");
+                    doSearch();
+                }
+            }
+        };
+        xhr.send(jsonPayload);
+    } 
+    catch (err) {
+        document.getElementById("searchResult").innerHTML = err.message;
+    }
+}
+
 
 function saveCookie() {
     let minutes = 20;
@@ -255,7 +320,6 @@ function validateInput(s) {
     return s === "";
 }
 
-
 function toContacts() {
     window.location.href = 'contacts.html';
     readCookie();
@@ -266,49 +330,49 @@ function toAboutUs() {
     window.location.href = 'aboutus.html?user=' + encodeURIComponent(firstName);
 }
 
-function updateContact(contact) {
-    console.log("updateContact");
-}
+// function deleteContact(firstName, lastName, email, phone) {
+//     console.log("deleteContact");                                                               
+//     if (!confirm("Are you sure you want to delete this contact?")) {
+//         return;
+//     }
 
-function deleteContact(firstName, lastName, email, phone) {
-    console.log("deleteContact");                                                               
+//     let tmp = {
+//         firstName: firstName,
+//         lastName: lastName,
+//         email: email,
+//         phone: phone,
+//         userId: userId
+//     };
+//     let jsonPayload = JSON.stringify(tmp);
+
+//     let url = urlBase + '/GetContactID.' + extension;
+
+//     let xhr = new XMLHttpRequest();
+//     xhr.open("POST", url, true);
+//     xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+    
+//     xhr.onreadystatechange = function() {
+//         if (this.readyState == 4 && this.status == 200) {
+//             let jsonObject = JSON.parse(xhr.responseText);
+            
+//             if (jsonObject.error) {
+//                 console.error("Error getting contact ID:", jsonObject.error);
+//                 return;
+//             }
+
+//             let contactId = jsonObject.id;
+            
+//             deleteContactById(contactId);
+//         }
+//     };
+//     xhr.send(jsonPayload);
+// }
+
+function deleteContactById(contactId) {
     if (!confirm("Are you sure you want to delete this contact?")) {
         return;
     }
 
-    let tmp = {
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        phone: phone,
-        userId: userId
-    };
-    let jsonPayload = JSON.stringify(tmp);
-
-    let url = urlBase + '/GetContactID.' + extension;
-
-    let xhr = new XMLHttpRequest();
-    xhr.open("POST", url, true);
-    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-    
-    xhr.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            let jsonObject = JSON.parse(xhr.responseText);
-            
-            if (jsonObject.error) {
-                console.error("Error getting contact ID:", jsonObject.error);
-                return;
-            }
-
-            let contactId = jsonObject.id;
-            
-            deleteContactById(contactId);
-        }
-    };
-    xhr.send(jsonPayload);
-}
-
-function deleteContactById(contactId) {
     let tmp = {
         id: contactId
     };
