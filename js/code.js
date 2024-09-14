@@ -306,3 +306,52 @@ function toAboutUs() {
     console.log(firstName)
     window.location.href = 'aboutus.html?user=' + encodeURIComponent(firstName);
 }
+
+function showAllContacts() {
+    let tmp = {
+        search: "",  // Empty search to fetch all contacts
+        userId: userId
+    };
+
+    let jsonPayload = JSON.stringify(tmp);
+    let url = urlBase + '/SearchContacts.' + extension;
+
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
+    try {
+        xhr.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                let jsonObject = JSON.parse(xhr.responseText);
+                let contactList = jsonObject.results;
+
+                let tableBody = document.getElementById("searchResultTableBody");
+                tableBody.innerHTML = ""; // Clear any existing rows
+
+                // Loop through the contact list and generate table rows
+                for (let i = 0; i < contactList.length; i++) {
+                    let contact = contactList[i];
+                    let row = tableBody.insertRow();
+                    row.id = `row-${contact.ID}`;
+
+                    // Fill in the contact details
+                    row.innerHTML = `
+                        <td><span id="firstName-${contact.ID}">${contact.FirstName}</span></td>
+                        <td><span id="lastName-${contact.ID}">${contact.LastName}</span></td>
+                        <td><span id="email-${contact.ID}">${contact.Email}</span></td>
+                        <td><span id="phone-${contact.ID}">${contact.Phone}</span></td>
+                        <td>
+                            <button onclick="deleteContact(${contact.ID})">Delete</button>
+                            <button onclick="editContact(${contact.ID})">Edit</button>
+                        </td>
+                    `;
+                }
+            }
+        };
+        xhr.send(jsonPayload);
+    } catch (err) {
+        document.getElementById("searchResult").innerHTML = err.message;
+    }
+}
+
