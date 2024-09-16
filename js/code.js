@@ -112,15 +112,15 @@ function doRegister() {
     }
 }
 
-function doSearch() {
-    let srch = document.getElementById("searchText").value.trim();
-
-    // Call showAllContacts with the search term
-    showAllContacts(srch);
+function showAllContacts() {
+    document.getElementById("searchText").value = ""; // Clear the search text box
+    doSearch();
 }
 
 
-function showAllContacts(searchTerm = "") {
+function doSearch() {
+    let searchTerm = document.getElementById("searchText").value;
+
     let tmp = {
         search: searchTerm,
         userId: userId
@@ -141,6 +141,11 @@ function showAllContacts(searchTerm = "") {
 
                 let tableBody = document.getElementById("searchResultTableBody");
                 tableBody.innerHTML = ""; // Clear any existing rows
+
+                if (contactList.length === 0) {   
+                    document.getElementById("searchResult").innerHTML = "No contacts found";
+                    return;
+                }
 
                 // Loop through the contact list and generate table rows
                 for (let i = 0; i < contactList.length; i++) {
@@ -360,3 +365,44 @@ function deleteContactById(contactId) {
     };
     xhr.send(jsonPayload);
 }
+
+function scrollFunction() {
+    
+}
+
+function dragElement(ele) {
+    var p1 = 0, p2 = 0, p3 = 0, p4 = 0;
+    
+    ele.onmousedown = dragMouseDown;
+
+    function dragMouseDown(e) {
+        e = e || window.event;
+        e.preventDefault();
+        
+        if (e.toElement.id === "addContBox") {
+            p3 = e.clientX;
+            p4 = e.clientY;
+            document.onmouseup = closeDragElement;
+            document.onmousemove = elementDrag;
+        }
+        else {
+            e.toElement.focus();
+        }
+    }
+    function elementDrag(e) {
+        e = e || window.event;
+        e.preventDefault();
+        p1 = p3 - e.clientX;
+        p2 = p4 - e.clientY;
+        p3 = e.clientX;
+        p4 = e.clientY;
+        ele.style.top = (ele.offsetTop - p2) + "px";
+        ele.style.left = (ele.offsetLeft - p1) + "px";
+    }
+
+    function closeDragElement() {
+        document.onmouseup = null;
+        document.onmousemove = null;
+    }
+}
+

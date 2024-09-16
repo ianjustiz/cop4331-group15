@@ -16,11 +16,15 @@
 	{
 		$stmt = $conn->prepare("SELECT ID,firstName,lastName FROM Users WHERE Login=? AND Password=?");
                 $stmt->bind_param("ss", $inData["login"], $inData["password"]);
-		$stmt->execute();
+		        $stmt->execute();
 		$result = $stmt->get_result();
 
 		if( $row = $result->fetch_assoc()  )
 		{
+            $stmt = $conn->prepare("UPDATE Users SET DateLastLoggedIn=now() WHERE ID=?");
+                    $stmt->bind_param("i", $row['ID']);
+                    $stmt->execute();
+
 			returnWithInfo( $row['firstName'], $row['lastName'], $row['ID'] );
 		}
 		else
