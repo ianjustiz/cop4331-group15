@@ -379,14 +379,14 @@ function dragElement(ele) {
         e = e || window.event;
         e.preventDefault();
         
-        if (e.toElement.id === "addContBox") {
+        if (e.target.id === "addContBox") {
             p3 = e.clientX;
             p4 = e.clientY;
             document.onmouseup = closeDragElement;
             document.onmousemove = elementDrag;
         }
         else {
-            e.toElement.focus();
+            e.target.focus();
         }
     }
     function elementDrag(e) {
