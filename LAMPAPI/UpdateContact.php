@@ -15,7 +15,6 @@
 	} 
 	else
 	{
-		// todo: add error handling for no matches!
 		$stmt = $conn->prepare("update Contacts set FirstName=?, LastName=?, Email=?, Phone=? where ID=?");
 		$stmt->bind_param("sssss", $firstName, $lastName, $email, $phone, $id);
 		$stmt->execute();

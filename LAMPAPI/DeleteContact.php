@@ -8,16 +8,14 @@
     } 
     else
     {
-        // rudimentary deletion criteria, needs to be updated to account
-        // for an account having multiple contacts with the same name
-        $stmt = $conn->prepare("DELETE FROM Contacts WHERE UserID=? AND FirstName=? AND LastName=?");
-        $stmt->bind_param("iss", $inData["id"], $inData["firstName"], $inData["lastName"]);
+        $stmt = $conn->prepare("DELETE FROM Contacts WHERE ID=?");
+        $stmt->bind_param("s", $inData["id"]);
         $stmt->execute();
 
         $stmt->close();
         $conn->close();
 
-        returnWithInfo($inData["id"], $inData["firstName"], $inData["lastName"]);
+        returnWithError("");
     }
 
     function getRequestInfo()
@@ -33,7 +31,7 @@
 
     function returnWithError( $err )
     {
-        $retValue = '{"id":0,"firstName":"","lastName":"","error":"' . $err . '"}';
+        $retValue = '{"error":"' . $err . '"}';
         sendResultInfoAsJson( $retValue );
     }
 
