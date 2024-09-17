@@ -14,8 +14,11 @@ function doLogin() {
     let password = document.getElementById("loginPassword").value;
     //var hash = md5(password);
 
+    document.getElementById("loginFeedbackDiv").style.display = 'none';
+
     if (validateInput(login) || validateInput(password)) {
-        document.getElementById("loginResult").innerHTML = "Please insert a username and password";
+        document.getElementById("loginResult").innerHTML = "Please Insert a Username and Password";
+        document.getElementById("loginFeedbackDiv").style.display = 'block';
         return;
     }
 
@@ -37,7 +40,8 @@ function doLogin() {
                 userId = jsonObject.id;
 
                 if (userId < 1) {
-                    document.getElementById("loginResult").innerHTML = "User/Password combination incorrect";
+                    document.getElementById("loginResult").innerHTML = "User/Password Combination Incorrect";
+                    document.getElementById("loginFeedbackDiv").style.display = 'block';
                     return;
                 }
                 
@@ -52,6 +56,7 @@ function doLogin() {
         xhr.send(jsonPayload);
     } catch (err) {
         document.getElementById("loginResult").innerHTML = err.message;
+        document.getElementById("loginFeedbackDiv").style.display = 'block';
     }
 }
 
@@ -67,6 +72,7 @@ function doRegister() {
 
     if (validateInput(firstName) || validateInput(lastName) || validateInput(login) || validateInput(password)) {
         document.getElementById("registerResult").innerHTML = "Please fill all fields before registering";
+        document.getElementById("registerFeedbackDiv").style.display = 'block';
         return;
     }
 
@@ -93,6 +99,7 @@ function doRegister() {
 
                 if (jsonObject.error == "Username already exists") {
                     document.getElementById("registerResult").innerHTML = "Username already taken";
+                    document.getElementById("registerFeedbackDiv").style.display = 'block';
                     return;
                 }
 
@@ -101,6 +108,7 @@ function doRegister() {
                 saveCookie();
 
                 document.getElementById("registerResult").innerHTML = "User has been registered";
+                document.getElementById("registerFeedbackDiv").style.display = 'block';
 
                 window.location.href = "contacts.html";
             }
@@ -109,6 +117,8 @@ function doRegister() {
     }
     catch (err) {
         document.getElementById("registerResult").innerHTML = err.message;
+        document.getElementById("registerFeedbackDiv").style.display = 'block';
+
     }
 }
 
