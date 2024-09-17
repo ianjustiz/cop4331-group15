@@ -75,7 +75,12 @@ function doRegister() {
         document.getElementById("registerFeedbackDiv").style.display = 'block';
         return;
     }
-    // let loginRegex
+    let passwordRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+    if (!passwordRegex.test(password)) {
+        document.getElementById("registerResult").innerHTML = "Password must contain at least 8 characters, 1 uppercase letter, 1 lowercase letter, and 1 number";
+        document.getElementById("registerFeedbackDiv").style.display = 'block';
+        return;
+    }
 
     document.getElementById("registerResult").innerHTML = "";
 
