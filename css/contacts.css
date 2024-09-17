@@ -205,12 +205,13 @@
 .team-member {
   display: flex;
   align-items: center;
-  background: #fff;
-  border: 1px solid #ddd;
+  background: transparent;
+  border: 2px solid rgba(255,255,255,.2);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 10px rgba(0,0,0,.5);
   margin: 10px 0;
   padding: 1rem;
   border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   position: relative; /* Ensure relative positioning for the icon */
   overflow: hidden; /* Ensure content does not overflow */
 }
@@ -223,11 +224,12 @@
 .team-member h2 {
   margin: 0;
   font-size: 1.6rem;
+  color: #e2e2e2;
 }
 .team-member p {
   margin: 0;
   font-size: 1rem;
-  color: #555;
+  color: #c3c3c3;
 }
 
 .linkedin-icon {
