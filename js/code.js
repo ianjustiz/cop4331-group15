@@ -75,6 +75,7 @@ function doRegister() {
         document.getElementById("registerFeedbackDiv").style.display = 'block';
         return;
     }
+    // let loginRegex
 
     document.getElementById("registerResult").innerHTML = "";
 
@@ -290,16 +291,31 @@ function doLogout() {
 }
 
 function addContact() {
-    let newContactFirst = document.getElementById("FName").value;
-    let newContactLast = document.getElementById("LName").value;
-    let newContactEmail = document.getElementById("email").value;
-    let newContactNumber = document.getElementById("phN").value;
+    let newContactFirst = document.getElementById("FName").value.trim();
+    let newContactLast = document.getElementById("LName").value.trim();
+    let newContactEmail = document.getElementById("email").value.trim();
+    let newContactNumber = document.getElementById("phN").value.trim();
     readCookie();
 
     if (newContactFirst === "" || newContactLast === "" || newContactEmail === "" || newContactNumber === "") {
         document.getElementById("contactAddResult").innerHTML = "Please populate all fields before submitting";
         return 0;
     }
+    let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(newContactEmail)) {
+        document.getElementById("contactAddResult").innerHTML = "Please enter a valid email address";
+        return 0;
+    }
+    let phoneRegexFull = /[0-9]{3}-[0-9]{3}-[0-9]{4}/;
+    let phoneRegexMini = /[0-9]{10}/;
+    if (!phoneRegexFull.test(newContactNumber)) {
+        if (!phoneRegexMini.test(newContactNumber)) {
+            document.getElementById("contactAddResult").innerHTML = "Please enter a valid phone number";
+            return 0;
+        }        
+        newContactNumber = newContactNumber.slice(0, 3) + "-" + newContactNumber.slice(3, 6) + "-" + newContactNumber.slice(6, 10);
+    }
+
     document.getElementById("contactAddResult").innerHTML = "";
 
     let tmp = {
