@@ -305,6 +305,7 @@ select {
     flex-direction: row;
     flex-wrap: wrap;
     width: 100%;
+    height: 70px;
   }
   
   .column {
