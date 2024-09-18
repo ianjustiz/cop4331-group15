@@ -477,10 +477,10 @@ function deleteContactById(contactId) {
 }
 
 function scrollFunction() {
-    console.log("scrollFunction");
-    // if scroll is at the bottom searchTableResults
     let table = document.getElementById("searchResultTableBody");
-    if (table.scrollHeight - table.scrollTop === table.clientHeight) {
+    // if scroll is at the bottom searchTableResults
+
+    if (table.scrollHeight - table.scrollTop < table.clientHeight + 10) {
         console.log("yeah");
         doSearch();
     }
