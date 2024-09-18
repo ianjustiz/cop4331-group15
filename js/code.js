@@ -129,17 +129,27 @@ function doRegister() {
 }
 
 function showAllContacts() {
-    document.getElementById("searchText").value = ""; // Clear the search text box
-    doSearch();
+    document.getElementById("searchText").value = "";
+    doSearch(true);
 }
 
-
-function doSearch() {
+function doSearch(clear = false) {
+    let lastId = -1;
     let searchTerm = document.getElementById("searchText").value;
+    let prevTable = document.getElementsByClassName("ContactRow");
+    
+    if (!clear && prevTable.length > 0) {
+        lastId = parseInt(prevTable[prevTable.length - 1].id.split("-")[1]);
+    }
+    
+    if (clear) {
+        document.getElementById("searchResultTableBody").scrollTop = 0;
+    }
 
     let tmp = {
         search: searchTerm,
-        userId: userId
+        userId: userId,
+        lastId: lastId
     };
 
     let jsonPayload = JSON.stringify(tmp);
@@ -156,8 +166,10 @@ function doSearch() {
                 let contactList = jsonObject.results;
 
                 let tableBody = document.getElementById("searchResultTableBody");
-                tableBody.innerHTML = ""; // Clear any existing rows
-
+                if (lastId === -1) {
+                    tableBody.innerHTML = ""; // Clear any existing rows
+                }
+                
                 if (contactList.length === 0) {   
                     document.getElementById("searchResult").innerHTML = "No contacts found";
                     return;
@@ -167,6 +179,7 @@ function doSearch() {
                 for (let i = 0; i < contactList.length; i++) {
                     let contact = contactList[i];
                     let row = tableBody.insertRow();
+                    row.className = "ContactRow";
                     row.id = `row-${contact.ID}`;
 
                     // Fill in the contact details
@@ -455,7 +468,8 @@ function deleteContactById(contactId) {
                 console.error("Error deleting contact:", jsonObject.error);
             } else {
                 console.log("Contact deleted successfully");
-                doSearch(); 
+                document.getElementById(`row-${contactId}`).remove();
+                // doSearch(); 
             }
         }
     };
@@ -463,7 +477,13 @@ function deleteContactById(contactId) {
 }
 
 function scrollFunction() {
-    
+    console.log("scrollFunction");
+    // if scroll is at the bottom searchTableResults
+    let table = document.getElementById("searchResultTableBody");
+    if (table.scrollHeight - table.scrollTop === table.clientHeight) {
+        console.log("yeah");
+        doSearch();
+    }
 }
 
 function dragElement(ele) {

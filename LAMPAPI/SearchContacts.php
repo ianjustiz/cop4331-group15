@@ -30,10 +30,13 @@
 						) 
 						like ? 
 					and 
-						UserID = ?"
+						UserID = ?
+                    and
+                        ID > ?
+                    limit 10"
 		);
 		$contactName = "%" . $inData["search"] . "%";
-		$stmt->bind_param("ss", $contactName, $inData["userId"]);
+		$stmt->bind_param("ssi", $contactName, $inData["userId"], $inData["lastId"]);
 		$stmt->execute();
 		
 		$result = $stmt->get_result();
