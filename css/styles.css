@@ -137,6 +137,14 @@ input[type="text"], input[type="password"] {
     font-weight: 600;
   }
 
+#loginButton:hover {
+    opacity: 0.8;
+}
+
+#loginButton:active {
+    opacity: 0.5;
+}
+
 #registerButton {
     width: 50%;
     height: 45px;
@@ -150,6 +158,14 @@ input[type="text"], input[type="password"] {
     color: #333;
     font-weight: 600;
   }
+
+#registerButton:hover {
+    opacity: 0.8;
+}
+
+#registerButton:active {
+    opacity: 0.5;
+}
 
 #loginDiv #login{
     position: relative;
@@ -322,4 +338,3 @@ select {
     flex: 1;
     margin: 0 5px;
   }
-  
