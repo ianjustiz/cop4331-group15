@@ -538,7 +538,7 @@ function validReg(login, password) {
     }
 
     if (password !== "") {
-        let regex = /(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,30}$/;
+        let regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{8,}$/;
         if (!regex.test(password)) {
             console.log("PASSWORD IS NOT VALID");
         } else {
