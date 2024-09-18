@@ -75,22 +75,22 @@
                     </div>
 
                     <div class="form-floating mb-3 mt-3">
-                        <input type="text" class="form-control" id="FName" placeholder="FN">
+                        <input type="text" class="form-control" id="FName" placeholder="">
                         <label for="FN">First Name</label>
                     </div>
 
                     <div class="form-floating mb-3 mt-3">
-                        <input type="text" class="form-control" id="LName" placeholder="LN">
+                        <input type="text" class="form-control" id="LName" placeholder="">
                         <label for="LN">Last Name</label>
                     </div>
 
                     <div class="form-floating mb-3 mt-3">
-                        <input type="text" class="form-control" id="email" placeholder="Enter email" name="email">
+                        <input type="text" class="form-control" id="email" placeholder="" name="email">
                         <label for="email">Email</label>
                     </div>
 
                     <div class="form-floating mt-3 mb-3">
-                        <input type="text" class="form-control" id="phN" placeholder="PH Num">
+                        <input type="text" class="form-control" id="phN" placeholder="">
                         <label for="phN">Phone Number</label>
                     </div>
 
@@ -134,17 +134,19 @@
         console.log("Contacts Page Loaded");
     }, false);
 
+    dragElement(document.getElementById('addContBox'));
+
     function showForm() {
         var addContactBox = document.getElementById('addContBox');
         var contactTable = document.querySelector('.table-style');
 
         if (addContactBox.style.display === 'none' || addContactBox.style.display === '') {
             addContactBox.style.display = 'block';
-            contactTable.classList.add('hidden');
+            // contactTable.classList.add('hidden');
         }
         else {
             addContactBox.style.display = 'none';
-            contactTable.classList.remove('hidden');
+            // contactTable.classList.remove('hidden');
 
             let inputs = addContactBox.getElementsByTagName('input')
             for (let i = 0; i < inputs.length; i++) {

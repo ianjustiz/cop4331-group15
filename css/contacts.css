@@ -47,6 +47,12 @@
   z-index: 100;
 }
 
+span#contactAddResult {
+    color: #dc3545;
+    font-size: 16px;
+    font-weight: bold;
+}
+
 #addContButton {
   position: relative;
   width: 100%;
@@ -315,12 +321,15 @@ table.table-style td {
   text-align: center; /* Unified text alignment */
   font-size: 18px;
   font-weight: bold;
+  overflow-x: auto;
 }
 
 .table-style tr:hover {
   background-color: rgba(128,128,128, 0.2);
 
 }
+
+
 
 /* Custom Scrollbar */
 .table-style tbody::-webkit-scrollbar {
@@ -337,3 +346,15 @@ table.table-style td {
   border: 3px solid #e6e6e6;
 }
 
+table.table-style td::-webkit-scrollbar {
+    height: 8px;
+}
+  
+/* table.table-style td::-webkit-scrollbar-track {
+    background: #e6e6e6;
+} */
+  
+table.table-style td::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 10px;
+}

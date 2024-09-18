@@ -16,7 +16,7 @@ function doLogin() {
 
     document.getElementById("loginFeedbackDiv").style.display = 'none';
 
-    if (validateInput(login) || validateInput(password)) {
+    if (login === "" || password === "") {
         document.getElementById("loginResult").innerHTML = "Please Insert a Username and Password";
         document.getElementById("loginFeedbackDiv").style.display = 'block';
         return;
@@ -70,7 +70,7 @@ function doRegister() {
     let login = document.getElementById("regLoginName").value;
     let password = document.getElementById("regPassword").value;
 
-    if (validateInput(firstName) || validateInput(lastName) || validateInput(login) || validateInput(password)) {
+    if (firstName === "" || lastName === "" || login === "" || password === "") {
         document.getElementById("registerResult").innerHTML = "Please fill all fields before registering";
         document.getElementById("registerFeedbackDiv").style.display = 'block';
         return;
@@ -197,14 +197,37 @@ function setupUpdate(connId) {
     let email = document.getElementById(`email-${connId}`).innerText;
     let phone = document.getElementById(`phone-${connId}`).innerText;
 
+    let onInputFunc = `validateContactUpdate('${connId}')`;
+
     document.getElementById(`row-${connId}`).innerHTML = `
-        <td><input type="text" id="editFirstName-${connId}" value="${firstName}"></td>
-        <td><input type="text" id="editLastName-${connId}" value="${lastName}"></td>
-        <td><input type="text" id="editEmail-${connId}" value="${email}"></td>
-        <td><input type="text" id="editPhone-${connId}" value="${phone}"></td>
+        <td><input oninput="${onInputFunc}" type="text" id="editFirstName-${connId}" value="${firstName}"></td>
+        <td><input oninput="${onInputFunc}" type="text" id="editLastName-${connId}" value="${lastName}"></td>
+        <td><input oninput="${onInputFunc}" type="text" id="editEmail-${connId}" value="${email}"></td>
+        <td><input oninput="${onInputFunc}" type="text" id="editPhone-${connId}" value="${phone}"></td>
         <td>
-            <button onclick="doSearch()">Cancel</button>
-            <button onclick="saveUpdate(${connId})">Save</button>
+            <button id="cancelButton-${connId}" onclick="cancelUpdate(${connId})">Cancel</button>
+            <button id="saveButton-${connId}" onclick="saveUpdate(${connId})">Save</button>
+        </td>
+    `;
+}
+
+function cancelUpdate(connId) {
+    console.log("cancelUpdate");
+
+    let firstName = document.getElementById(`editFirstName-${connId}`).value;
+    let lastName = document.getElementById(`editLastName-${connId}`).value;
+    let email = document.getElementById(`editEmail-${connId}`).value;
+    let phone = document.getElementById(`editPhone-${connId}`).value;
+
+    let row = document.getElementById(`row-${connId}`);
+    row.innerHTML = `
+        <td><span id="firstName-${connId}">${firstName}</span></td>
+        <td><span id="lastName-${connId}">${lastName}</span></td>
+        <td><span id="email-${connId}">${email}</span></td>
+        <td><span id="phone-${connId}">${phone}</span></td>
+        <td>
+            <button id="delete-${connId}" onclick="deleteContactById(${connId})">Delete</button>
+            <button id="edit-${connId}" onclick="setupUpdate(${connId})">Edit</button>
         </td>
     `;
 }
@@ -216,6 +239,12 @@ function saveUpdate(connId) {
     let lastName = document.getElementById(`editLastName-${connId}`).value;
     let email = document.getElementById(`editEmail-${connId}`).value;
     let phone = document.getElementById(`editPhone-${connId}`).value;
+
+    // validates input strings, corrects phone number format, returns "" on incorrectible invalid input
+    phone = validateContact(firstName, lastName, email, phone);
+    if (phone === "") {
+        return;
+    }
 
     let tmp = {
         id: connId,
@@ -242,7 +271,17 @@ function saveUpdate(connId) {
                     console.error("Error updating contact:", jsonObject.error);
                 } else {
                     console.log("Contact updated successfully");
-                    doSearch();
+                    let row = document.getElementById(`row-${connId}`);
+                    row.innerHTML = `
+                        <td><span id="firstName-${connId}">${firstName}</span></td>
+                        <td><span id="lastName-${connId}">${lastName}</span></td>
+                        <td><span id="email-${connId}">${email}</span></td>
+                        <td><span id="phone-${connId}">${phone}</span></td>
+                        <td>
+                            <button id="delete-${connId}" onclick="deleteContactById(${connId})">Delete</button>
+                            <button id="edit-${connId}" onclick="setupUpdate(${connId})">Edit</button>
+                        </td>
+                    `;
                 }
             }
         };
@@ -295,6 +334,50 @@ function doLogout() {
     window.location.href = "index.html";
 }
 
+function validateContact(newContactFirst, newContactLast, newContactEmail, newContactNumber) {
+    if (newContactFirst === "" || newContactLast === "" || newContactEmail === "" || newContactNumber === "") {
+        document.getElementById("contactAddResult").innerHTML = "Please populate all fields before submitting";
+        return "";
+    }
+    let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(newContactEmail)) {
+        document.getElementById("contactAddResult").innerHTML = "Please enter a valid email address";
+        return "";
+    }
+    let phoneRegexFull = /[0-9]{3}-[0-9]{3}-[0-9]{4}/;
+    let phoneRegexMini = /[0-9]{10}/;
+    if (!phoneRegexFull.test(newContactNumber)) {
+        if (!phoneRegexMini.test(newContactNumber)) {
+            document.getElementById("contactAddResult").innerHTML = "Please enter a valid phone number";
+            return "";
+        }        
+        newContactNumber = newContactNumber.slice(0, 3) + "-" + newContactNumber.slice(3, 6) + "-" + newContactNumber.slice(6, 10);
+    }
+
+    return newContactNumber;
+}
+
+function validateContactUpdate(connId) {    
+    let firstName = document.getElementById(`editFirstName-${connId}`).value;
+    let lastName = document.getElementById(`editLastName-${connId}`).value;
+    let email = document.getElementById(`editEmail-${connId}`).value;
+    let phone = document.getElementById(`editPhone-${connId}`).value;
+
+    console.log(phone);
+    let newPhone = validateContact(firstName, lastName, email, phone);
+    if (newPhone === "") {
+        document.getElementById(`saveButton-${connId}`).disabled = true;
+        return;
+    }
+    else if (newPhone !== phone) {
+        document.getElementById(`editPhone-${connId}`).value = newPhone;
+        document.getElementById(`saveButton-${connId}`).disabled = false;
+    }
+    else {
+        document.getElementById(`saveButton-${connId}`).disabled = false;
+    }
+}
+
 function addContact() {
     let newContactFirst = document.getElementById("FName").value.trim();
     let newContactLast = document.getElementById("LName").value.trim();
@@ -302,23 +385,10 @@ function addContact() {
     let newContactNumber = document.getElementById("phN").value.trim();
     readCookie();
 
-    if (newContactFirst === "" || newContactLast === "" || newContactEmail === "" || newContactNumber === "") {
-        document.getElementById("contactAddResult").innerHTML = "Please populate all fields before submitting";
+    // validates input strings, corrects phone number format, returns "" on incorrectible invalid input
+    newContactNumber = validateContact(newContactFirst, newContactLast, newContactEmail, newContactNumber);
+    if (newContactNumber === "") {
         return 0;
-    }
-    let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(newContactEmail)) {
-        document.getElementById("contactAddResult").innerHTML = "Please enter a valid email address";
-        return 0;
-    }
-    let phoneRegexFull = /[0-9]{3}-[0-9]{3}-[0-9]{4}/;
-    let phoneRegexMini = /[0-9]{10}/;
-    if (!phoneRegexFull.test(newContactNumber)) {
-        if (!phoneRegexMini.test(newContactNumber)) {
-            document.getElementById("contactAddResult").innerHTML = "Please enter a valid phone number";
-            return 0;
-        }        
-        newContactNumber = newContactNumber.slice(0, 3) + "-" + newContactNumber.slice(3, 6) + "-" + newContactNumber.slice(6, 10);
     }
 
     document.getElementById("contactAddResult").innerHTML = "";
@@ -349,11 +419,6 @@ function addContact() {
         document.getElementById("contactAddResult").innerHTML = err.message;
     }
 
-}
-
-function validateInput(s) {
-    // add further validation here for now just check if empty
-    return s === "";
 }
 
 function toContacts() {
