@@ -75,8 +75,8 @@ function doRegister() {
         document.getElementById("registerFeedbackDiv").style.display = 'block';
         return;
     }
-    let passwordRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
-    if (!passwordRegex.test(password)) {
+
+    if (!validReg(login, password)) {
         document.getElementById("registerResult").innerHTML = "Password must contain at least 8 characters, 1 uppercase letter, 1 lowercase letter, and 1 number";
         document.getElementById("registerFeedbackDiv").style.display = 'block';
         return;
@@ -116,7 +116,7 @@ function doRegister() {
                 document.getElementById("registerResult").innerHTML = "User has been registered";
                 document.getElementById("registerFeedbackDiv").style.display = 'block';
 
-                window.location.href = "contacts.html";
+                //window.location.href = "contacts.html";
             }
         };
         xhr.send(jsonPayload);
@@ -522,3 +522,34 @@ function dragElement(ele) {
     }
 }
 
+function validReg(login, password) {
+    console.log("in validReg");
+    let lErr = true;
+    let pErr = true;
+
+    if (login !== "") {
+        let regex = /^[a-zA-Z0-9-_]{5,15}$/;
+        if (!regex.test(login)) {
+            console.log("USERNAME IS NOT VALID");
+        } else {
+            console.log("USERNAME IS VALID");
+            lErr = false;  // Update the correct variable
+        }
+    }
+
+    if (password !== "") {
+        let regex = /(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,30}$/;
+        if (!regex.test(password)) {
+            console.log("PASSWORD IS NOT VALID");
+        } else {
+            console.log("PASSWORD IS VALID");
+            pErr = false;  // Update the correct variable
+        }
+    }
+
+    if (lErr || pErr) {
+        return false;
+    }
+
+    return true; 
+}
