@@ -193,20 +193,6 @@ function doSearch(clear = false) {
                             <button class="editButton" id="edit-${contact.ID}" onclick="setupUpdate(${contact.ID})"></button>
                         </td>
                     `;
-                //     row.innerHTML = `
-                //         <td><span id="firstName-${contact.ID}">${contact.FirstName}</span></td>
-                //         <td><span id="lastName-${contact.ID}">${contact.LastName}</span></td>
-                //         <td><span id="email-${contact.ID}">${contact.Email}</span></td>
-                //         <td><span id="phone-${contact.ID}">${contact.Phone}</span></td>
-                //         <td>
-                //             <button id="delete-${contact.ID}" onclick="deleteContactById(${contact.ID})">
-				// <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M6 7H5v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7H6zm4 12H8v-9h2v9zm6 0h-2v-9h2v9zm.618-15L15 2H9L7.382 4H3v2h18V4z">
-				// </path></svg></button>
-                //             <button id="edit-${contact.ID}" onclick="setupUpdate(${contact.ID})">
-				// <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="m16 2.012 3 3L16.713 7.3l-3-3zM4 14v3h3l8.299-8.287-3-3zm0 6h16v2H4z">
-				// </path></svg></button>
-                //         </td>
-                //     `;
                 }
             }
         };
@@ -225,6 +211,7 @@ function setupUpdate(connId) {
     let phone = document.getElementById(`phone-${connId}`).innerText;
 
     let onInputFunc = `validateContactUpdate('${connId}')`;
+    let cancelFunc = `cancelUpdate('${connId}', '${firstName}', '${lastName}', '${email}', '${phone}')`;
 
     document.getElementById(`row-${connId}`).innerHTML = `
         <td><input oninput="${onInputFunc}" type="text" id="editFirstName-${connId}" value="${firstName}"></td>
@@ -232,19 +219,14 @@ function setupUpdate(connId) {
         <td><input oninput="${onInputFunc}" type="text" id="editEmail-${connId}" value="${email}"></td>
         <td><input oninput="${onInputFunc}" type="text" id="editPhone-${connId}" value="${phone}"></td>
         <td>
-            <button class="cancelButton" id="cancelButton-${connId}" onclick="cancelUpdate(${connId})"></button>
+            <button class="cancelButton" id="cancelButton-${connId}" onclick="${cancelFunc}"></button>
             <button class="saveButton" id="saveButton-${connId}" onclick="saveUpdate(${connId})"></button>
         </td>
     `;
 }
 
-function cancelUpdate(connId) {
+function cancelUpdate(connId, firstName, lastName, email, phone) {
     console.log("cancelUpdate");
-
-    let firstName = document.getElementById(`editFirstName-${connId}`).value;
-    let lastName = document.getElementById(`editLastName-${connId}`).value;
-    let email = document.getElementById(`editEmail-${connId}`).value;
-    let phone = document.getElementById(`editPhone-${connId}`).value;
 
     let row = document.getElementById(`row-${connId}`);
     row.innerHTML = `
