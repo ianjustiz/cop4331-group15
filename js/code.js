@@ -450,17 +450,15 @@ function addContact() {
 }
 
 function toContacts() {
-    window.location.href = 'contacts.html';
-    readCookie();
+    if(window.location.href !== 'http://www.cop4331-team15.lol/contacts.html') {
+        window.location.href = 'contacts.html';
+        readCookie();
+    }
 }
 
 function toAboutUs() {
-    let visited = true;
-    window.location.href = 'aboutus.html?user=' + encodeURIComponent(firstName);
-
-    firstName = urlParams.get('user');
-    console.log(firstName)
-
+    if(firstName)
+        window.location.href = 'aboutus.html?user=' + encodeURIComponent(firstName);
 }
 
 function deleteContactById(contactId) {
