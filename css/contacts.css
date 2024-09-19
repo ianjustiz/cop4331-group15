@@ -4,7 +4,7 @@
   top: 0;
   left: 0;
   z-index: 100;
-  width: 250px;
+  width: 17%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -15,13 +15,30 @@
   color: white;
 }
 
+input {
+  width: 90%;
+  border-radius: 10px;
+  border-width: medium;
+}
+
+
+.font {
+  font-family: 'Bruno Ace SC';
+  font-size: 50px;
+}
+
+body {
+  height: 100%;
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+
 .container {
-  margin-top: 80px;
+  margin-top: 1%;
 }
 
 .container h1 {
-  position: fixed;
-  margin-left: 34%;
+  margin-left: 40%;
   color: white;
   font-size: 50px;
   align-items: center;
@@ -34,7 +51,6 @@
   transform: translate(-20%, -50%);
   align-items: center;
   border: 2px solid rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(4px);
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4);
   color: black;
   width: 420px;
@@ -45,6 +61,8 @@
   padding-top: 30px;
   display: none;
   z-index: 100;
+  background-color: rgba(2, 2, 22, 0.6);
+  backdrop-filter: blur(4px);
 }
 
 span#contactAddResult {
@@ -83,8 +101,8 @@ span#contactAddResult {
   color: white;
   border: none;
   border-radius: 50%;
-  margin-left: 80px;
-  margin-top: 87px;
+  margin-left: 18px;
+  margin-top: 3%;
   cursor: pointer;
   transition: background-color 0.3s ease;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
@@ -119,7 +137,6 @@ span#contactAddResult {
 }
 
 .sidebar-text {
-  font-family: sans-serif;
   color: #e2e2e2;
 }
 
@@ -141,8 +158,8 @@ span#contactAddResult {
   border: 1px solid #ccc;
   outline: none;
   transition: box-shadow 0.3s ease;
-  margin-top: 84px;
-  margin-left: 130px;
+  margin-top: 3%;
+  margin-left: 150pt;
 }
 
 #searchText:focus {
@@ -156,23 +173,24 @@ span#contactAddResult {
   color: white;
   border: none;
   border-radius: 50%;
-  margin-left: 390px;
-  margin-top: 82px;
+  margin-left: 470px;
+  margin-top: 3%;
   cursor: pointer;
   transition: background-color 0.3s ease;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 }
 
 #searchBtn:hover {
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: gray;
 }
 
 #logoutButton, #contactsButton, #aboutUsButton {
   width: 100%;
   height: 50px;
   background: white;
-  color: black;
-  border: none;
+  color: white;
+  border-color: rgba(255, 255, 255, 0.7);
+  background-color: transparent;
   border-radius: 20px;
   text-align: center;
   font-size: 16px;
@@ -263,16 +281,68 @@ span#contactAddResult {
   height: 500px; /* Set the container height */
 }
 
+.editButton {
+  width: 30px;
+  height: 30px;
+  background-color: transparent;
+  border: none;
+  background-size: contain;
+  background-repeat: no-repeat;
+padding-left: 30px;
+  background-image: url('data:image/svg+xml;utf8, <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="m16 2.012 3 3L16.713 7.3l-3-3zM4 14v3h3l8.299-8.287-3-3zm0 6h16v2H4z"></path></svg>');
+}
+
+.deleteButton {
+  width: 30px;
+  height: 30px;
+  background-color: transparent;
+  border: none;
+  background-size: contain;
+  background-repeat: no-repeat;
+padding-right: 30px;
+  background-image: url('data:image/svg+xml;utf8, <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M6 7H5v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7H6zm4 12H8v-9h2v9zm6 0h-2v-9h2v9zm.618-15L15 2H9L7.382 4H3v2h18V4z"></path></svg>');
+}
+
+.cancelButton {
+  width: 30px;
+  height: 30px;
+  background-color: transparent;
+  border: none;
+  background-size: contain;
+  background-repeat: no-repeat;
+padding-right: 30px;
+  background-image: url('data:image/svg+xml;utf8, <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm4.207 12.793-1.414 1.414L12 13.414l-2.793 2.793-1.414-1.414L10.586 12 7.793 9.207l1.414-1.414L12 10.586l2.793-2.793 1.414 1.414L13.414 12l2.793 2.793z"></path></svg>');
+}
+
+.saveButton {
+  width: 30px;
+  height: 30px;
+  background-color: transparent;
+  border: none;
+  background-size: contain;
+  background-repeat: no-repeat;
+padding-left: 30px;
+  background-image: url('data:image/svg+xml;utf8, <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M5 21h14a2 2 0 0 0 2-2V8l-5-5H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2zM7 5h4v2h2V5h2v4H7V5zm0 8h10v6H7v-6z"></path></svg>');
+}
+
+.saveButton:hover, .cancelButton:hover, .deleteButton:hover, .editButton:hover {
+  filter: drop-shadow( 3px 3px 2px rgba(0, 0, 0, 0.3));
+}
+
+
+
+
 .table-style {
   position: relative;
   z-index: 2;
   box-shadow: 0 6px 12px #0005;
   border-radius: 12px;
   overflow: hidden;
-  width: 100%;
+  width: 90%;
+  height: 90%;
   text-align: center;
   border-collapse: collapse;
-  margin-left: 130px;
+  margin-left: 15%;
   margin-top: 85px;
   border: 4px solid black;
   background-color: rgba(255, 255, 255, 0.65);  color: white;
@@ -281,7 +351,8 @@ span#contactAddResult {
 }
 
 table.table-style {
-  width: 100%;
+  width: 90%;
+  height: 90%;
   table-layout: fixed;
 }
 
@@ -299,10 +370,10 @@ table.table-style tbody {
 }
 
 table.table-style th {
-  padding: 15px;
+  padding: 1%;
   vertical-align: middle; 
   text-align: center;
-  font-size: 20px; 
+  font-size: 40%; 
 }
 
 table.table-style th {
@@ -317,10 +388,10 @@ table.table-style th {
 table.table-style td {
   border: 1px solid #ddd;
   background-color: transparent;
-  padding: 13px; /* Unified padding */
+  padding: 1%; /* Unified padding */
   vertical-align: middle; /* Vertical alignment for cells */
   text-align: center; /* Unified text alignment */
-  font-size: 18px;
+  font-size: 120%;
   font-weight: bold;
   overflow-x: auto;
 }

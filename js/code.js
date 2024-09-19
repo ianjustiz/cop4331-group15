@@ -183,16 +183,30 @@ function doSearch(clear = false) {
                     row.id = `row-${contact.ID}`;
 
                     // Fill in the contact details
-                    row.innerHTML = `
+                        row.innerHTML = `
                         <td><span id="firstName-${contact.ID}">${contact.FirstName}</span></td>
                         <td><span id="lastName-${contact.ID}">${contact.LastName}</span></td>
                         <td><span id="email-${contact.ID}">${contact.Email}</span></td>
                         <td><span id="phone-${contact.ID}">${contact.Phone}</span></td>
                         <td>
-                            <button id="delete-${contact.ID}" onclick="deleteContactById(${contact.ID})">Delete</button>
-                            <button id="edit-${contact.ID}" onclick="setupUpdate(${contact.ID})">Edit</button>
+                            <button class="deleteButton" id="delete-${contact.ID}" onclick="deleteContactById(${contact.ID})"></button>
+                            <button class="editButton" id="edit-${contact.ID}" onclick="setupUpdate(${contact.ID})"></button>
                         </td>
                     `;
+                //     row.innerHTML = `
+                //         <td><span id="firstName-${contact.ID}">${contact.FirstName}</span></td>
+                //         <td><span id="lastName-${contact.ID}">${contact.LastName}</span></td>
+                //         <td><span id="email-${contact.ID}">${contact.Email}</span></td>
+                //         <td><span id="phone-${contact.ID}">${contact.Phone}</span></td>
+                //         <td>
+                //             <button id="delete-${contact.ID}" onclick="deleteContactById(${contact.ID})">
+				// <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M6 7H5v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7H6zm4 12H8v-9h2v9zm6 0h-2v-9h2v9zm.618-15L15 2H9L7.382 4H3v2h18V4z">
+				// </path></svg></button>
+                //             <button id="edit-${contact.ID}" onclick="setupUpdate(${contact.ID})">
+				// <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="m16 2.012 3 3L16.713 7.3l-3-3zM4 14v3h3l8.299-8.287-3-3zm0 6h16v2H4z">
+				// </path></svg></button>
+                //         </td>
+                //     `;
                 }
             }
         };
@@ -218,8 +232,8 @@ function setupUpdate(connId) {
         <td><input oninput="${onInputFunc}" type="text" id="editEmail-${connId}" value="${email}"></td>
         <td><input oninput="${onInputFunc}" type="text" id="editPhone-${connId}" value="${phone}"></td>
         <td>
-            <button id="cancelButton-${connId}" onclick="cancelUpdate(${connId})">Cancel</button>
-            <button id="saveButton-${connId}" onclick="saveUpdate(${connId})">Save</button>
+            <button class="cancelButton" id="cancelButton-${connId}" onclick="cancelUpdate(${connId})"></button>
+            <button class="saveButton" id="saveButton-${connId}" onclick="saveUpdate(${connId})"></button>
         </td>
     `;
 }
@@ -239,8 +253,8 @@ function cancelUpdate(connId) {
         <td><span id="email-${connId}">${email}</span></td>
         <td><span id="phone-${connId}">${phone}</span></td>
         <td>
-            <button id="delete-${connId}" onclick="deleteContactById(${connId})">Delete</button>
-            <button id="edit-${connId}" onclick="setupUpdate(${connId})">Edit</button>
+            <button class="deleteButton" id="delete-${connId}" onclick="deleteContactById(${connId})"></button>
+            <button class="editButton" id="edit-${connId}" onclick="setupUpdate(${connId})"></button>
         </td>
     `;
 }
@@ -291,8 +305,9 @@ function saveUpdate(connId) {
                         <td><span id="email-${connId}">${email}</span></td>
                         <td><span id="phone-${connId}">${phone}</span></td>
                         <td>
-                            <button id="delete-${connId}" onclick="deleteContactById(${connId})">Delete</button>
-                            <button id="edit-${connId}" onclick="setupUpdate(${connId})">Edit</button>
+                            <button class="deleteButton" id="delete-${connId}" onclick="deleteContactById(${connId})"></button>
+
+                            <button class="editButton" id="edit-${connId}" onclick="setupUpdate(${connId})"></button>
                         </td>
                     `;
                 }
@@ -440,8 +455,12 @@ function toContacts() {
 }
 
 function toAboutUs() {
-    console.log(firstName)
+    let visited = true;
     window.location.href = 'aboutus.html?user=' + encodeURIComponent(firstName);
+
+    firstName = urlParams.get('user');
+    console.log(firstName)
+
 }
 
 function deleteContactById(contactId) {
@@ -477,10 +496,10 @@ function deleteContactById(contactId) {
 }
 
 function scrollFunction() {
-    console.log("scrollFunction");
-    // if scroll is at the bottom searchTableResults
     let table = document.getElementById("searchResultTableBody");
-    if (table.scrollHeight - table.scrollTop === table.clientHeight) {
+    // if scroll is at the bottom searchTableResults
+
+    if (table.scrollHeight - table.scrollTop < table.clientHeight + 10) {
         console.log("yeah");
         doSearch();
     }
