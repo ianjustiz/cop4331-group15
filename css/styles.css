@@ -307,7 +307,7 @@ select {
 
 .registerFeedbackDiv {
     display: none;
-    margin-top: 55px;
+    margin-top: 20px;
     position: absolute;
     background: transparent;
     border: 2px solid rgba(255,255,255,.2);

@@ -77,7 +77,8 @@ function doRegister() {
     }
 
     if (!validReg(login, password)) {
-        document.getElementById("registerResult").innerHTML = "Password must contain at least 8 characters, 1 uppercase letter, 1 lowercase letter, and 1 number";
+	console.log(login, password);        
+	document.getElementById("registerResult").innerHTML = "Password must contain at least 8 characters, 1 uppercase letter, 1 lowercase letter, 1 number, and 1 symbol";
         document.getElementById("registerFeedbackDiv").style.display = 'block';
         return;
     }
@@ -479,7 +480,7 @@ function scrollFunction() {
     let table = document.getElementById("searchResultTableBody");
     // if scroll is at the bottom searchTableResults
 
-    if (table.scrollHeight - table.scrollTop < table.clientHeight + 10) {
+    if (table.scrollHeight - table.scrollTop < table.clientHeight + 2) {
         console.log("yeah");
         doSearch();
     }
@@ -527,13 +528,8 @@ function validReg(login, password) {
     let pErr = true;
 
     if (login !== "") {
-        let regex = /^[a-zA-Z0-9-_]{5,15}$/;
-        if (!regex.test(login)) {
-            console.log("USERNAME IS NOT VALID");
-        } else {
-            console.log("USERNAME IS VALID");
-            lErr = false;  // Update the correct variable
-        }
+        console.log("USERNAME IS VALID");
+        lErr = false;  // Update the correct variable
     }
 
     if (password !== "") {
