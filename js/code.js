@@ -67,6 +67,17 @@ function doRegister() {
 
     if (validateInput(firstName) || validateInput(lastName) || validateInput(login) || validateInput(password)) {
         document.getElementById("registerResult").innerHTML = "Please fill all fields before registering";
+<<<<<<< Updated upstream
+=======
+        document.getElementById("registerFeedbackDiv").style.display = 'block';
+        return;
+    }
+
+    if (!validReg(login, password)) {
+	console.log(login, password);        
+	document.getElementById("registerResult").innerHTML = "Password must contain at least 8 characters, 1 uppercase letter, 1 lowercase letter, 1 number, and 1 symbol";
+        document.getElementById("registerFeedbackDiv").style.display = 'block';
+>>>>>>> Stashed changes
         return;
     }
     // let loginRegex
@@ -155,14 +166,14 @@ function doSearch() {
                     row.id = `row-${contact.ID}`;
 
                     // Fill in the contact details
-                    row.innerHTML = `
+                        row.innerHTML = `
                         <td><span id="firstName-${contact.ID}">${contact.FirstName}</span></td>
                         <td><span id="lastName-${contact.ID}">${contact.LastName}</span></td>
                         <td><span id="email-${contact.ID}">${contact.Email}</span></td>
                         <td><span id="phone-${contact.ID}">${contact.Phone}</span></td>
                         <td>
-                            <button id="delete-${contact.ID}" onclick="deleteContactById(${contact.ID})">Delete</button>
-                            <button id="edit-${contact.ID}" onclick="setupUpdate(${contact.ID})">Edit</button>
+                            <button class="deleteButton" id="delete-${contact.ID}" onclick="deleteContactById(${contact.ID})"></button>
+                            <button class="editButton" id="edit-${contact.ID}" onclick="setupUpdate(${contact.ID})"></button>
                         </td>
                     `;
                 }
@@ -182,14 +193,41 @@ function setupUpdate(connId) {
     let email = document.getElementById(`email-${connId}`).innerText;
     let phone = document.getElementById(`phone-${connId}`).innerText;
 
+<<<<<<< Updated upstream
+=======
+    let onInputFunc = `validateContactUpdate('${connId}')`;
+    let cancelFunc = `cancelUpdate('${connId}', '${firstName}', '${lastName}', '${email}', '${phone}')`;
+
+>>>>>>> Stashed changes
     document.getElementById(`row-${connId}`).innerHTML = `
         <td><input type="text" id="editFirstName-${connId}" value="${firstName}"></td>
         <td><input type="text" id="editLastName-${connId}" value="${lastName}"></td>
         <td><input type="text" id="editEmail-${connId}" value="${email}"></td>
         <td><input type="text" id="editPhone-${connId}" value="${phone}"></td>
         <td>
+<<<<<<< Updated upstream
             <button onclick="doSearch()">Cancel</button>
             <button onclick="saveUpdate(${connId})">Save</button>
+=======
+            <button class="cancelButton" id="cancelButton-${connId}" onclick="${cancelFunc}"></button>
+            <button class="saveButton" id="saveButton-${connId}" onclick="saveUpdate(${connId})"></button>
+        </td>
+    `;
+}
+
+function cancelUpdate(connId, firstName, lastName, email, phone) {
+    console.log("cancelUpdate");
+
+    let row = document.getElementById(`row-${connId}`);
+    row.innerHTML = `
+        <td><span id="firstName-${connId}">${firstName}</span></td>
+        <td><span id="lastName-${connId}">${lastName}</span></td>
+        <td><span id="email-${connId}">${email}</span></td>
+        <td><span id="phone-${connId}">${phone}</span></td>
+        <td>
+            <button class="deleteButton" id="delete-${connId}" onclick="deleteContactById(${connId})"></button>
+            <button class="editButton" id="edit-${connId}" onclick="setupUpdate(${connId})"></button>
+>>>>>>> Stashed changes
         </td>
     `;
 }
@@ -227,7 +265,22 @@ function saveUpdate(connId) {
                     console.error("Error updating contact:", jsonObject.error);
                 } else {
                     console.log("Contact updated successfully");
+<<<<<<< Updated upstream
                     doSearch();
+=======
+                    let row = document.getElementById(`row-${connId}`);
+                    row.innerHTML = `
+                        <td><span id="firstName-${connId}">${firstName}</span></td>
+                        <td><span id="lastName-${connId}">${lastName}</span></td>
+                        <td><span id="email-${connId}">${email}</span></td>
+                        <td><span id="phone-${connId}">${phone}</span></td>
+                        <td>
+                            <button class="deleteButton" id="delete-${connId}" onclick="deleteContactById(${connId})"></button>
+
+                            <button class="editButton" id="edit-${connId}" onclick="setupUpdate(${connId})"></button>
+                        </td>
+                    `;
+>>>>>>> Stashed changes
                 }
             }
         };
@@ -342,13 +395,15 @@ function validateInput(s) {
 }
 
 function toContacts() {
-    window.location.href = 'contacts.html';
-    readCookie();
+    if(window.location.href !== 'http://www.cop4331-team15.lol/contacts.html') {
+        window.location.href = 'contacts.html';
+        readCookie();
+    }
 }
 
 function toAboutUs() {
-    console.log(firstName)
-    window.location.href = 'aboutus.html?user=' + encodeURIComponent(firstName);
+    if(firstName)
+        window.location.href = 'aboutus.html?user=' + encodeURIComponent(firstName);
 }
 
 // function deleteContact(firstName, lastName, email, phone) {
@@ -421,7 +476,17 @@ function deleteContactById(contactId) {
 }
 
 function scrollFunction() {
+<<<<<<< Updated upstream
     
+=======
+    let table = document.getElementById("searchResultTableBody");
+    // if scroll is at the bottom searchTableResults
+
+    if (table.scrollHeight - table.scrollTop < table.clientHeight + 2) {
+        console.log("yeah");
+        doSearch();
+    }
+>>>>>>> Stashed changes
 }
 
 function dragElement(ele) {
@@ -460,3 +525,32 @@ function dragElement(ele) {
     }
 }
 
+<<<<<<< Updated upstream
+=======
+function validReg(login, password) {
+    console.log("in validReg");
+    let lErr = true;
+    let pErr = true;
+
+    if (login !== "") {
+        console.log("USERNAME IS VALID");
+        lErr = false;  // Update the correct variable
+    }
+
+    if (password !== "") {
+        let regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{8,}$/;
+        if (!regex.test(password)) {
+            console.log("PASSWORD IS NOT VALID");
+        } else {
+            console.log("PASSWORD IS VALID");
+            pErr = false;  // Update the correct variable
+        }
+    }
+
+    if (lErr || pErr) {
+        return false;
+    }
+
+    return true; 
+}
+>>>>>>> Stashed changes
